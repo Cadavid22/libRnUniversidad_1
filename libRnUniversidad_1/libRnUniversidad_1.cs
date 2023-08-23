@@ -35,8 +35,37 @@ namespace libRnUniversidad_1
                 return false;
 
             try
-            { 
-                
+            {
+                string strPath = AppDomain.CurrentDomain.BaseDirectory + @"Descuentos.txt";
+                int intCant = 0;
+                string strLinea;
+                string strCodigo;
+                string strCodigo;
+                float fltNota;
+                itnCant = File.ReadAllLines(strPath).Length;
+                if (intCant <= 0)
+                    return true;
+                StreamReader Archivo = new StreamReader(@strPath);
+                while ((strLinea = Archivo.ReadLine()) != null)
+                {
+                    vectorLinea = strLinea.Split(':');
+                    strCodigo = vectorLinea[0];
+                    fltNota = Convert.ToSingle(vectorLinea[1]);
+                    if (strCodigo == intTipoEst.ToString() && fltProm >= fltNota)
+                    {
+                        fltValCredito = Convert.ToSingle(vectorLinea[2]);
+                        IntCredit = Convert.ToInt16(vectorLinea[3]);
+                        fltDesc = Convert.ToSingle(vectorLinea[4]);
+                        break;
+                    }
+                }
+                Archivo.Close();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                strError = ex.Message;
+                return false;
             }
         }
         #endregion
